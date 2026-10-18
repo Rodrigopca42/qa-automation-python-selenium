@@ -1,3 +1,4 @@
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
@@ -6,12 +7,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from config.configuracoes import TIMEOUT
 
 
-
 class CheckOut1Page:
 
-    # ========================================================
-    # LOCATORS
-    # ========================================================
+    # ====================================================
+    # LOCATORS - CHECKOUT 1
+    # ====================================================
+
+    CONTAINER_PRODUT1 = (By.XPATH, "//section/form/div[1]/div[2]")
+    CONTAINER_PRODUT2 = (By.XPATH, "//section/form/div[1]/div[3]")
 
     QUANTIDADE = (By.XPATH, "//div[2]/div[3]/input")
     DELETE = (By.XPATH, "//div[2]/div[5]/a")
@@ -20,40 +23,88 @@ class CheckOut1Page:
     UPDATE = (By.XPATH, "//div[3]/div[2]/input[1]")
     CHECK_OUT = (By.XPATH, "//div[3]/div[2]/input[2]")
 
-    # ========================================================
-    # CONSTRUTOR
-    # ========================================================
-
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(driver, TIMEOUT)
 
+    # ====================================================
+    # LOCALIZAÇÃO E ESPERA
+    # ====================================================
 
-    # ========================================================
-    # AÇÕES
-    # ========================================================
-
-
-    def alterar_quantidade(self, nova_quantidade):
-        quantidade = self.driver.find_element(
-        *self.QUANTIDADE
-    )
-
-        quantidade.click()
-        quantidade.clear()
-        quantidade.send_keys(str(nova_quantidade))
-
-    def delete_product(self):
-        delete = self.driver.find_element(
-            *self.DELETE
+    def aguardar_elemento(self, locator):
+        return self.wait.until(
+            EC.visibility_of_element_located(locator)
         )
 
-        delete.click()
-
-    def voltar_para_escolher_mais(self):
-        shopping = self.driver.find_element(
-            *self.CONTINUE_SHOPPING
+    def aguardar_elemento_clicavel(self, locator):
+        return self.wait.until(
+            EC.element_to_be_clickable(locator)
         )
 
-        shopping.click()
+    # ====================================================
+    # DESTAQUE
+    # ====================================================
 
-        
+    def destacar_elemento(self, locator):
+        elemento = self.aguardar_elemento(locator)
+
+        self.driver.execute_script(
+            """
+            arguments[0].style.border = '3px solid yellow';
+            arguments[0].style.boxSizing = 'border-box';
+            """,
+            elemento
+        )
+
+    # ====================================================
+    # INTERAÇÕES
+    # ====================================================
+
+    def clicar_elemento(self, locator):
+        elemento = self.aguardar_elemento_clicavel(locator)
+        elemento.click()
+
+    def mover_cursor_para_elemento(self, locator):
+        elemento = self.aguardar_elemento(locator)
+
+        ActionChains(self.driver).move_to_element(
+            elemento
+        ).perform()
+
+    # ====================================================
+    # AÇÕES DO CHECKOUT 1
+    # ====================================================
+
+    def acessar_checkout(self):
+        self.mover_cursor_para_elemento(self.CHECK_OUT)
+
+        botao_checkout = self.aguardar_elemento_clicavel(
+            self.CHECK_OUT
+        )
+
+        botao_checkout.click()
+
+    def continuar_comprando(self):
+        self.clicar_elemento(self.CONTINUE_SHOPPING)
+
+    def atualizar_carrinho(self):
+        self.clicar_elemento(self.UPDATE)
+
+    def preencher_observacao(self, texto):
+        campo = self.aguardar_elemento(self.ADD_NOTE)
+        campo.clear()
+        campo.send_keys(texto)
+
+    # ====================================================
+    # CONSULTAS PARA VALIDAÇÃO
+    # ====================================================
+
+    def produto_1_visivel(self):
+        return self.aguardar_elemento(
+            self.CONTAINER_PRODUT1
+        ).is_displayed()
+
+    def produto_2_visivel(self):
+        return self.aguardar_elemento(
+            self.CONTAINER_PRODUT2
+        ).is_displayed()
