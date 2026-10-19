@@ -1,0 +1,58 @@
+2026-10-19 15:52:42,931 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-19 15:52:42,991 - INFO - Home acessada
+2026-10-19 15:52:45,199 - INFO - Clique em catálogo na navbar
+2026-10-19 15:52:48,185 - INFO - Selecionando produto do primeiro step
+2026-10-19 15:52:51,263 - INFO - PDP do produto selecionado
+2026-10-19 15:52:53,765 - INFO - Destaque do minicart no header
+2026-10-19 15:53:01,959 - INFO - Clique no CHECK OUT do header
+2026-10-19 15:53:04,871 - INFO - Produto selecionado identificado no carrinho
+2026-10-19 15:53:07,058 - INFO - Clique no CHECK OUT do carrinho
+2026-10-19 15:53:13,303 - INFO - Preenchimento do formulário - Step 1
+2026-10-19 15:53:16,845 - INFO - Preenchimento do formulário - Step 2
+2026-10-19 15:53:19,212 - INFO - Preenchimento do formulário - Step 3
+2026-10-19 15:53:23,409 - ERROR - Falha na execução do fluxo de compra
+Traceback (most recent call last):
+  File "C:\Estudo_Automacao_Python\tests\test_fluxo_compra.py", line 270, in test_fluxo_compra
+    pagamento.rolar_para_step_3()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 106, in rolar_para_step_3
+    self.rolar_ate_elemento(self.INPUT_CARD_NUMBER)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 88, in rolar_ate_elemento
+    elemento = self.aguardar_elemento(locator)
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 74, in aguardar_elemento
+    return self.wait.until(
+           ~~~~~~~~~~~~~~~^
+        EC.visibility_of_element_located(locator)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\RODRIGO\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff7b465e745]
+	(No symbol) [0x7ff7b4213d00]
+	(No symbol) [0x7ff7b4043f3d]
+	(No symbol) [0x7ff7b409f6ed]
+	(No symbol) [0x7ff7b409f9bc]
+	(No symbol) [0x7ff7b40f7ed7]
+	(No symbol) [0x7ff7b40f4b5a]
+	(No symbol) [0x7ff7b4091462]
+	(No symbol) [0x7ff7b4092273]
+	(No symbol) [0x7ff7b47017b1]
+	(No symbol) [0x7ff7b47387c7]
+	(No symbol) [0x7ff7b472c85e]
+	(No symbol) [0x7ff7b43d884e]
+	(No symbol) [0x7ff7b4220415]
+	(No symbol) [0x7ff7b421bdf4]
+	(No symbol) [0x7ff7b421bf84]
+	(No symbol) [0x7ff7b4207f7c]
+	(No symbol) [0x7ffc16a0dda7]
+	(No symbol) [0x7ffc175dee4c]
+
+2026-10-19 15:53:25,597 - INFO - Status final: FAIL
+2026-10-19 15:53:25,597 - INFO - ========== FIM DO TESTE ==========
+2026-10-19 15:53:27,415 - INFO - Relatório PDF gerado: reports\2026-10-19_15-52-39\relatorio_2026-10-19_15-52-39.pdf
+2026-10-19 15:53:52,669 - INFO - Relatório enviado por e-mail com sucesso.

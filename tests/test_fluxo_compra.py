@@ -14,11 +14,7 @@ from pages.check_out1_page import CheckOut1Page
 from pages.check_out_payment_page import CheckOutPaymentPage
 from pages.confirmation_page import ConfirmationPage
 
-from utils.evidencia import (
-    capturar_evidencia,
-    capturar_evidencia_destacada,
-    aguardar_atualizacao_minicart,
-)
+from utils.evidencia import *
 from utils.logger import configurar_logger
 from utils.relatorio_pdf import gerar_relatorio_pdf
 from utils.email_sender import enviar_relatorio_email
@@ -65,6 +61,8 @@ def test_fluxo_compra(navegador):
     confirmacao = ConfirmationPage(navegador)
 
     try:
+
+
         logger.info("========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========")
 
         navegador.maximize_window()
@@ -73,12 +71,13 @@ def test_fluxo_compra(navegador):
         # HOME
         # ====================================================
 
-        logger.info("Home acessada")
+        logger.info("Home acessada - destaque do Catálogo na navbar")
 
-        capturar_evidencia(
+        capturar_evidencia_destacada(
             navegador,
             pasta_evidencia,
-            "01_home"
+            "01_home",
+            navbar.CATALOGO
         )
 
         # ====================================================
@@ -238,6 +237,10 @@ def test_fluxo_compra(navegador):
             DADOS_ENDERECO["bairro"]
         )
 
+        pagamento.preencher_cidade(
+            DADOS_ENDERECO["cidade"]
+        )
+
         capturar_evidencia(
             navegador,
             pasta_evidencia,
@@ -282,11 +285,11 @@ def test_fluxo_compra(navegador):
         pagamento.preencher_codigo_seguranca(
             CHECKOUT_CARD_CVV
         )
-
+        
         pagamento.preencher_nome_cartao(
             CHECKOUT_CARD_NAME
         )
-
+        
         # CPF: requer CHECKOUT_CPF em configuracoes.py
         # e preencher_cpf() no Page Object.
         pagamento.preencher_cpf(CHECKOUT_CPF)
@@ -328,7 +331,10 @@ def test_fluxo_compra(navegador):
 
         logger.info("Teste de fluxo de compra executado com sucesso")
 
+    
+
     except Exception:
+
         logger.exception("Falha na execução do fluxo de compra")
 
         capturar_evidencia(
@@ -339,23 +345,46 @@ def test_fluxo_compra(navegador):
 
         raise
 
+    
     finally:
         logger.info("Status final: %s", status)
         logger.info("========== FIM DO TESTE ==========")
 
-        caminho_pdf = gerar_relatorio_pdf(
-            id_execucao=id_execucao,
-            ambiente=AMBIENTE,
-            status=status,
-            caminho_bdd=caminho_bdd,
-            pasta_evidencia=pasta_evidencia,
-            caminho_log=caminho_log,
-            pasta_relatorio=pasta_relatorio
-        )
+        caminho_pdf = None
 
-        enviar_relatorio_email(
-            caminho_pdf=caminho_pdf,
-            destinatario=EMAIL_DESTINATARIO,
-            assunto=f"Relatório QA - Fluxo de Compra - {status}",
-            corpo=f"Segue o relatório do teste de fluxo de compra. Status: {status}."
-        )
+        try:
+            caminho_pdf = gerar_relatorio_pdf(
+                id_execucao=id_execucao,
+                caminho_cenario=caminho_bdd,
+                pasta_evidencias=pasta_evidencia,
+                caminho_log=caminho_log,
+                pasta_relatorio=pasta_relatorio,
+                status=status,
+                ambiente=AMBIENTE
+            )
+
+            logger.info("Relatório PDF gerado: %s", caminho_pdf)
+
+        except Exception:
+            logger.exception("Falha na geração do relatório PDF.")
+
+        if caminho_pdf:
+            try:
+                enviar_relatorio_email(
+                    caminho_pdf=caminho_pdf,
+                    destinatario=EMAIL_DESTINATARIO,
+                    assunto=f"Relatório QA - Fluxo de Compra - {status}",
+                    corpo=(
+                        "Segue o relatório do teste de fluxo "
+                        f"de compra. Status: {status}."
+                    )
+                )
+
+                logger.info(
+                    "Relatório enviado por e-mail com sucesso."
+                )
+
+            except Exception:
+                logger.exception(
+                    "Falha ao enviar o relatório por e-mail."
+                )

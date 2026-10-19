@@ -1,0 +1,66 @@
+2026-10-19 15:20:33,352 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-19 15:20:33,408 - INFO - Home acessada
+2026-10-19 15:20:35,634 - INFO - Clique em catálogo na navbar
+2026-10-19 15:20:38,569 - INFO - Selecionando produto do primeiro step
+2026-10-19 15:20:41,757 - INFO - PDP do produto selecionado
+2026-10-19 15:20:44,295 - INFO - Destaque do minicart no header
+2026-10-19 15:20:52,496 - INFO - Clique no CHECK OUT do header
+2026-10-19 15:20:55,492 - INFO - Produto selecionado identificado no carrinho
+2026-10-19 15:20:57,672 - INFO - Clique no CHECK OUT do carrinho
+2026-10-19 15:21:01,337 - INFO - Preenchimento do formulário - Step 1
+2026-10-19 15:21:05,770 - INFO - Preenchimento do formulário - Step 2
+2026-10-19 15:21:08,125 - INFO - Preenchimento do formulário - Step 3
+2026-10-19 15:21:08,314 - ERROR - Falha na execução do fluxo de compra
+Traceback (most recent call last):
+  File "C:\Estudo_Automacao_Python\tests\test_fluxo_compra.py", line 276, in test_fluxo_compra
+    pagamento.preencher_validade_cartao(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        CHECKOUT_CARD_EXPIRATION
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 211, in preencher_validade_cartao
+    self.preencher_campo(self.INPUT_EXPIRATION_DATE, validade)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 144, in preencher_campo
+    elemento.clear()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\RODRIGO\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 117, in clear
+    self._execute(Command.CLEAR_ELEMENT)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RODRIGO\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\RODRIGO\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 347, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\RODRIGO\AppData\Local\Programs\Python\Python314\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidElementStateException: Message: invalid element state
+  (Session info: chrome=155.0.8059.82)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff7b465e745]
+	(No symbol) [0x7ff7b4213d00]
+	(No symbol) [0x7ff7b4043d36]
+	(No symbol) [0x7ff7b40958e7]
+	(No symbol) [0x7ff7b40c8ada]
+	(No symbol) [0x7ff7b4092af6]
+	(No symbol) [0x7ff7b40f4b5a]
+	(No symbol) [0x7ff7b4091462]
+	(No symbol) [0x7ff7b4092273]
+	(No symbol) [0x7ff7b47017b1]
+	(No symbol) [0x7ff7b47387c7]
+	(No symbol) [0x7ff7b472c85e]
+	(No symbol) [0x7ff7b43d884e]
+	(No symbol) [0x7ff7b4220415]
+	(No symbol) [0x7ff7b421bdf4]
+	(No symbol) [0x7ff7b421bf84]
+	(No symbol) [0x7ff7b4207f7c]
+	(No symbol) [0x7ffc16a0dda7]
+	(No symbol) [0x7ffc175dee4c]
+
+2026-10-19 15:21:10,465 - INFO - Status final: FAIL
+2026-10-19 15:21:10,465 - INFO - ========== FIM DO TESTE ==========
+2026-10-19 15:21:12,394 - INFO - Relatório PDF gerado: reports\2026-10-19_15-20-30\relatorio_2026-10-19_15-20-30.pdf
+2026-10-19 15:21:31,936 - INFO - Relatório enviado por e-mail com sucesso.

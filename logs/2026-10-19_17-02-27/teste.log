@@ -1,0 +1,62 @@
+2026-10-19 17:02:29,238 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-19 17:02:29,276 - INFO - Home acessada
+2026-10-19 17:02:31,483 - INFO - Clique em catálogo na navbar
+2026-10-19 17:02:34,203 - INFO - Selecionando produto do primeiro step
+2026-10-19 17:02:37,212 - INFO - PDP do produto selecionado
+2026-10-19 17:02:39,698 - INFO - Destaque do minicart no header
+2026-10-19 17:02:47,840 - INFO - Clique no CHECK OUT do header
+2026-10-19 17:02:50,755 - INFO - Produto selecionado identificado no carrinho
+2026-10-19 17:02:52,945 - INFO - Clique no CHECK OUT do carrinho
+2026-10-19 17:02:56,751 - INFO - Preenchimento do formulário - Step 1
+2026-10-19 17:03:01,252 - INFO - Preenchimento do formulário - Step 2
+2026-10-19 17:03:03,570 - INFO - Preenchimento do formulário - Step 3
+2026-10-19 17:03:08,299 - ERROR - Falha na execução do fluxo de compra
+Traceback (most recent call last):
+  File "c:\Estudo_Automacao_Python\tests\test_fluxo_compra.py", line 280, in test_fluxo_compra
+    pagamento.preencher_codigo_seguranca(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        CHECKOUT_CARD_CVV
+        ^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 246, in preencher_codigo_seguranca
+    self.preencher_campo(self.INPUT_SECURITY_CODE, codigo )
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 145, in preencher_campo
+    elemento = self.aguardar_elemento_clicavel(locator)
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 81, in aguardar_elemento_clicavel
+    return self.wait.until(
+           ~~~~~~~~~~~~~~~^
+        EC.element_to_be_clickable(locator)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Estudo_Automacao_Python\.venv\Lib\site-packages\selenium\webdriver\support\wait.py", line 121, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff7b465e745]
+	(No symbol) [0x7ff7b4213d00]
+	(No symbol) [0x7ff7b4043f3d]
+	(No symbol) [0x7ff7b409f6ed]
+	(No symbol) [0x7ff7b409f9bc]
+	(No symbol) [0x7ff7b40f7ed7]
+	(No symbol) [0x7ff7b40f4b5a]
+	(No symbol) [0x7ff7b4091462]
+	(No symbol) [0x7ff7b4092273]
+	(No symbol) [0x7ff7b47017b1]
+	(No symbol) [0x7ff7b47387c7]
+	(No symbol) [0x7ff7b472c85e]
+	(No symbol) [0x7ff7b43d884e]
+	(No symbol) [0x7ff7b4220415]
+	(No symbol) [0x7ff7b421bdf4]
+	(No symbol) [0x7ff7b421bf84]
+	(No symbol) [0x7ff7b4207f7c]
+	(No symbol) [0x7ffc16a0dda7]
+	(No symbol) [0x7ffc175dee4c]
+
+2026-10-19 17:03:10,463 - INFO - Status final: FAIL
+2026-10-19 17:03:10,463 - INFO - ========== FIM DO TESTE ==========
+2026-10-19 17:03:12,272 - INFO - Relatório PDF gerado: reports\2026-10-19_17-02-27\relatorio_2026-10-19_17-02-27.pdf
+2026-10-19 17:03:34,880 - INFO - Relatório enviado por e-mail com sucesso.

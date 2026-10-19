@@ -1,0 +1,22 @@
+2026-10-19 17:33:43,426 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-19 17:33:43,461 - INFO - Home acessada
+2026-10-19 17:33:45,654 - INFO - Clique em catálogo na navbar
+2026-10-19 17:33:48,337 - INFO - Selecionando produto do primeiro step
+2026-10-19 17:33:51,340 - INFO - PDP do produto selecionado
+2026-10-19 17:33:53,918 - INFO - Destaque do minicart no header
+2026-10-19 17:34:02,101 - INFO - Clique no CHECK OUT do header
+2026-10-19 17:34:04,999 - INFO - Produto selecionado identificado no carrinho
+2026-10-19 17:34:07,147 - INFO - Clique no CHECK OUT do carrinho
+2026-10-19 17:34:11,184 - INFO - Preenchimento do formulário - Step 1
+2026-10-19 17:34:15,710 - INFO - Preenchimento do formulário - Step 2
+2026-10-19 17:34:18,027 - INFO - Preenchimento do formulário - Step 3
+2026-10-19 17:34:18,661 - ERROR - Falha na execução do fluxo de compra
+Traceback (most recent call last):
+  File "c:\Estudo_Automacao_Python\tests\test_fluxo_compra.py", line 290, in test_fluxo_compra
+    pagamento.preencher_cpf(CHECKOUT_CPF)
+                            ^^^^^^^^^^^^
+NameError: name 'CHECKOUT_CPF' is not defined
+2026-10-19 17:34:20,816 - INFO - Status final: FAIL
+2026-10-19 17:34:20,817 - INFO - ========== FIM DO TESTE ==========
+2026-10-19 17:34:22,680 - INFO - Relatório PDF gerado: reports\2026-10-19_17-33-41\relatorio_2026-10-19_17-33-41.pdf
+2026-10-19 17:34:59,155 - INFO - Relatório enviado por e-mail com sucesso.

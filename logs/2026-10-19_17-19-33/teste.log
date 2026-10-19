@@ -1,0 +1,29 @@
+2026-10-19 17:19:35,414 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-19 17:19:35,468 - INFO - Home acessada
+2026-10-19 17:19:37,679 - INFO - Clique em catálogo na navbar
+2026-10-19 17:19:40,416 - INFO - Selecionando produto do primeiro step
+2026-10-19 17:19:43,403 - INFO - PDP do produto selecionado
+2026-10-19 17:19:45,925 - INFO - Destaque do minicart no header
+2026-10-19 17:19:54,114 - INFO - Clique no CHECK OUT do header
+2026-10-19 17:19:57,016 - INFO - Produto selecionado identificado no carrinho
+2026-10-19 17:19:59,201 - INFO - Clique no CHECK OUT do carrinho
+2026-10-19 17:20:03,211 - INFO - Preenchimento do formulário - Step 1
+2026-10-19 17:20:07,783 - INFO - Preenchimento do formulário - Step 2
+2026-10-19 17:20:10,114 - INFO - Preenchimento do formulário - Step 3
+2026-10-19 17:20:10,561 - ERROR - Falha na execução do fluxo de compra
+Traceback (most recent call last):
+  File "c:\Estudo_Automacao_Python\tests\test_fluxo_compra.py", line 276, in test_fluxo_compra
+    pagamento.preencher_validade_cartao(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        CHECKOUT_CARD_EXPIRATION
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Estudo_Automacao_Python\pages\check_out_payment_page.py", line 251, in preencher_validade_cartao
+    assert valor_preenchido.replace(" ", "").replace("/", "") == validade_numerica, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Validade incompleta: 10 / 
+2026-10-19 17:20:12,707 - INFO - Status final: FAIL
+2026-10-19 17:20:12,707 - INFO - ========== FIM DO TESTE ==========
+2026-10-19 17:20:14,556 - INFO - Relatório PDF gerado: reports\2026-10-19_17-19-33\relatorio_2026-10-19_17-19-33.pdf
+2026-10-19 17:20:43,046 - INFO - Relatório enviado por e-mail com sucesso.

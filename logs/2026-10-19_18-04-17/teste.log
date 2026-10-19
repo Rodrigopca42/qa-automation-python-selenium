@@ -1,0 +1,60 @@
+2026-10-19 18:04:18,973 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-19 18:04:19,023 - INFO - Home acessada
+2026-10-19 18:04:21,215 - INFO - Clique em catálogo na navbar
+2026-10-19 18:04:23,937 - INFO - Selecionando produto do primeiro step
+2026-10-19 18:04:26,903 - INFO - PDP do produto selecionado
+2026-10-19 18:04:29,417 - INFO - Destaque do minicart no header
+2026-10-19 18:04:37,626 - INFO - Clique no CHECK OUT do header
+2026-10-19 18:04:40,324 - INFO - Produto selecionado identificado no carrinho
+2026-10-19 18:04:42,498 - INFO - Clique no CHECK OUT do carrinho
+2026-10-19 18:04:46,232 - INFO - Preenchimento do formulário - Step 1
+2026-10-19 18:04:50,688 - INFO - Preenchimento do formulário - Step 2
+2026-10-19 18:04:53,009 - INFO - Preenchimento do formulário - Step 3
+2026-10-19 18:04:54,230 - INFO - Clique no botão PAY NOW
+2026-10-19 18:04:54,438 - INFO - Validação da confirmação de compra
+2026-10-19 18:04:58,636 - ERROR - Falha na execução do fluxo de compra
+Traceback (most recent call last):
+  File "c:\Estudo_Automacao_Python\tests\test_fluxo_compra.py", line 309, in test_fluxo_compra
+    mensagem = confirmacao.obter_mensagem_confirmacao()
+  File "C:\Estudo_Automacao_Python\pages\confirmation_page.py", line 43, in obter_mensagem_confirmacao
+    elemento = self.aguardar_confirmacao()
+  File "C:\Estudo_Automacao_Python\pages\confirmation_page.py", line 21, in aguardar_confirmacao
+    return self.wait.until(
+           ~~~~~~~~~~~~~~~^
+        EC.visibility_of_element_located(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            self.CONTAINER_CONFIRMATION
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "C:\Estudo_Automacao_Python\.venv\Lib\site-packages\selenium\webdriver\support\wait.py", line 121, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff7b465e745]
+	(No symbol) [0x7ff7b4213d00]
+	(No symbol) [0x7ff7b4043f3d]
+	(No symbol) [0x7ff7b409f6ed]
+	(No symbol) [0x7ff7b409f9bc]
+	(No symbol) [0x7ff7b40f7ed7]
+	(No symbol) [0x7ff7b40f4b5a]
+	(No symbol) [0x7ff7b4091462]
+	(No symbol) [0x7ff7b4092273]
+	(No symbol) [0x7ff7b47017b1]
+	(No symbol) [0x7ff7b47387c7]
+	(No symbol) [0x7ff7b472c85e]
+	(No symbol) [0x7ff7b43d884e]
+	(No symbol) [0x7ff7b4220415]
+	(No symbol) [0x7ff7b421bdf4]
+	(No symbol) [0x7ff7b421bf84]
+	(No symbol) [0x7ff7b4207f7c]
+	(No symbol) [0x7ffc16a0dda7]
+	(No symbol) [0x7ffc175dee4c]
+
+2026-10-19 18:05:00,770 - INFO - Status final: FAIL
+2026-10-19 18:05:00,771 - INFO - ========== FIM DO TESTE ==========
+2026-10-19 18:05:02,574 - INFO - Relatório PDF gerado: reports\2026-10-19_18-04-17\relatorio_2026-10-19_18-04-17.pdf
+2026-10-19 18:05:21,849 - INFO - Relatório enviado por e-mail com sucesso.
