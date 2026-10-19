@@ -54,6 +54,8 @@ class CheckOutPaymentPage:
         "billingAddressCheckbox"
     )
 
+    INPUT_CPF = (By.XPATH, "//section/div/div/div[1]/input")
+
     BUTTON_PAY_NOW = (By.ID, "checkout-pay-button")
 
     # ====================================================
@@ -138,63 +140,74 @@ class CheckOutPaymentPage:
     # ====================================================
 
     def preencher_campo(self, locator, valor):
-        elemento = self.aguardar_elemento(locator)
+        elemento = self.aguardar_elemento_clicavel(locator)
         elemento.clear()
         elemento.send_keys(str(valor))
 
     
-# ====================================================
-# STEP 1 - CONTATO E ENDEREÇO
-# ====================================================
+    # ====================================================
+    # STEP 1 - CONTATO E ENDEREÇO
+    # ====================================================
 
-def preencher_email(self, email):
-    self.preencher_campo(self.INPUT_EMAIL, email)
+    def preencher_email(self, email):
+        self.preencher_campo(self.INPUT_EMAIL, email)
 
-def preencher_primeiro_nome(self, nome):
-    self.preencher_campo(self.INPUT_FIRST_NAME, nome)
+    def preencher_primeiro_nome(self, nome):
+        self.preencher_campo(self.INPUT_FIRST_NAME, nome)
 
-def preencher_sobrenome(self, sobrenome):
-    self.preencher_campo(self.INPUT_LAST_NAME, sobrenome)
+    def preencher_sobrenome(self, sobrenome):
+        self.preencher_campo(self.INPUT_LAST_NAME, sobrenome)
 
-def preencher_empresa(self, empresa):
-    self.preencher_campo(self.INPUT_COMPANY, empresa)
+    def preencher_empresa(self, empresa):
+        self.preencher_campo(self.INPUT_COMPANY, empresa)
 
-def preencher_cep(self, cep):
-    self.preencher_campo(self.INPUT_POSTAL_CODE, cep)
+    def preencher_cep(self, cep):
+        self.preencher_campo(self.INPUT_POSTAL_CODE, cep)
 
-def preencher_rua(self, rua):
-    self.preencher_campo(self.INPUT_STREET, rua)
+    def preencher_rua(self, rua):
+        self.preencher_campo(self.INPUT_STREET, rua)
 
-def preencher_numero(self, numero):
-    self.preencher_campo(self.INPUT_NUMBER, numero)
+    def preencher_numero(self, numero):
+        self.preencher_campo(self.INPUT_NUMBER, numero)
 
-def preencher_complemento(self, complemento):
-    self.preencher_campo(self.INPUT_COMPLEMENT, complemento)
+    def preencher_complemento(self, complemento):
+        self.preencher_campo(self.INPUT_COMPLEMENT, complemento)
 
-def preencher_bairro(self, bairro):
-    self.preencher_campo(self.INPUT_NEIGHBORHOOD, bairro)
-
-
-# ====================================================
-# STEP 2 - LOCALIZAÇÃO E TELEFONE
-# ====================================================
-
-def preencher_telefone(self, telefone):
-    self.preencher_campo(self.INPUT_PHONE, telefone)
+    def preencher_bairro(self, bairro):
+        self.preencher_campo(self.INPUT_NEIGHBORHOOD, bairro)
 
 
-# ====================================================
-# STEP 3 - PAGAMENTO COM CARTÃO
-# ====================================================
+    # ====================================================
+    # STEP 2 - LOCALIZAÇÃO E TELEFONE
+    # ====================================================
 
-def preencher_numero_cartao(self, numero):
-    self.preencher_campo(self.INPUT_CARD_NUMBER, numero)
+    def preencher_telefone(self, telefone):
+        self.preencher_campo(self.INPUT_PHONE, telefone)
 
-def preencher_validade_cartao(self, validade):
-    self.preencher_campo(self.INPUT_EXPIRATION_DATE, validade)
 
-def preencher_codigo_seguranca(self, codigo):
-    self.preencher_campo(self.INPUT_SECURITY_CODE, codigo)
+    # ====================================================
+    # STEP 3 - PAGAMENTO COM CARTÃO
+    # ====================================================
 
-def preencher_nome_cartao(self, nome):
-    self.preencher_campo(self.INPUT_NAME_ON_CARD, nome)
+    def preencher_numero_cartao(self, numero):
+        self.preencher_campo(self.INPUT_CARD_NUMBER, numero)
+
+    def preencher_validade_cartao(self, validade):
+        self.preencher_campo(self.INPUT_EXPIRATION_DATE, validade)
+
+    def preencher_codigo_seguranca(self, codigo):
+        self.preencher_campo(self.INPUT_SECURITY_CODE, codigo )
+
+    def preencher_nome_cartao(self, nome):
+        self.preencher_campo(self.INPUT_NAME_ON_CARD, nome)
+
+    def preencher_cpf(self, cpf):
+        self.preencher_campo(self.INPUT_CPF, cpf)
+
+
+    # ====================================================
+    # FINALIZAR PAGAMENTO
+    # ====================================================
+    def finalizar_pagamento(self):
+        self.rolar_ate_elemento(self.BUTTON_PAY_NOW)
+        self.clicar_elemento(self.BUTTON_PAY_NOW)
