@@ -76,7 +76,7 @@ def test_fluxo_compra(navegador):
         capturar_evidencia_destacada(
             navegador,
             pasta_evidencia,
-            "01_home",
+            "01_Home acessada - destaque do Catálogo na navbar",
             navbar.CATALOGO
         )
 
@@ -93,7 +93,7 @@ def test_fluxo_compra(navegador):
         capturar_evidencia(
             navegador,
             pasta_evidencia,
-            "02_catalogo"
+            "02_Clique em catálogo na navbar"
         )
 
         # ====================================================
@@ -109,7 +109,7 @@ def test_fluxo_compra(navegador):
         capturar_evidencia_destacada(
             navegador,
             pasta_evidencia,
-            "03_produto_catalogo",
+            "03_Selecionando produto do primeiro step",
             catalogo.CARD_BLACK_HEELS_COMPLET
         )
 
@@ -117,21 +117,8 @@ def test_fluxo_compra(navegador):
             catalogo.CARD_BLACK_HEELS_COMPLET
         )
 
-        # ====================================================
-        # PDP - ADD TO CART
-        # ====================================================
-
-        logger.info("PDP do produto selecionado")
-
-        capturar_evidencia_destacada(
-            navegador,
-            pasta_evidencia,
-            "04_add_to_cart",
-            pdp.ADD_TO_CART
-        )
-
         pdp.adicionar_ao_carrinho()
-
+ 
         # ====================================================
         # MINICART NO HEADER
         # ====================================================
@@ -143,7 +130,7 @@ def test_fluxo_compra(navegador):
         capturar_evidencia_destacada(
             navegador,
             pasta_evidencia,
-            "05_minicart_header",
+            "04_Destaque do minicart no header",
             header.MINI_CART
         )
 
@@ -156,7 +143,7 @@ def test_fluxo_compra(navegador):
         capturar_evidencia_destacada(
             navegador,
             pasta_evidencia,
-            "06_checkout_header",
+            "05_Clique no CHECK OUT do header",
             header.CHECK_OUT
         )
 
@@ -167,42 +154,26 @@ def test_fluxo_compra(navegador):
         # ====================================================
 
         logger.info(
-            "Produto selecionado identificado no carrinho"
+            "Destaque do Produto selecionado e preço total,clique no CHECK OUT no carrinho"
         )
 
         assert carrinho.produto_1_visivel(), (
             "Produto não encontrado no carrinho."
         )
 
-        carrinho.destacar_elemento(
-            carrinho.CONTAINER_PRODUT1
-        )
+        carrinho.destacar_elemento(carrinho.CONTAINER_PRODUT1)
+        carrinho.destacar_elemento(carrinho.TOTAL_PRICE)
 
         capturar_evidencia(
             navegador,
             pasta_evidencia,
-            "07_produto_carrinho"
+            "06_Destaque do Produto selecionado e preço total,clique no CHECK OUT no carrinho"
         )
 
-        # ====================================================
-        # CHECK OUT NO CARRINHO
-        # ====================================================
-
-        logger.info("Clique no CHECK OUT do carrinho")
-
-        carrinho.destacar_elemento(
-            carrinho.CHECK_OUT
-        )
-
-        capturar_evidencia(
-            navegador,
-            pasta_evidencia,
-            "08_checkout_carrinho"
-        )
-
-        # O botão exige posicionamento do cursor.
+         # O botão exige posicionamento do cursor.
         carrinho.acessar_checkout()
 
+       
         # ====================================================
         # CHECKOUT PAGAMENTO - STEP 1
         # ====================================================
@@ -244,7 +215,7 @@ def test_fluxo_compra(navegador):
         capturar_evidencia(
             navegador,
             pasta_evidencia,
-            "09_formulario_step1"
+            "07_Preenchimento do formulário - Step 1"
         )
 
         # ====================================================
@@ -263,7 +234,7 @@ def test_fluxo_compra(navegador):
         capturar_evidencia(
             navegador,
             pasta_evidencia,
-            "10_formulario_step2"
+            "08_Preenchimento do formulário - Step 2"
         )
 
         # ====================================================
@@ -274,21 +245,13 @@ def test_fluxo_compra(navegador):
 
         pagamento.rolar_para_step_3()
 
-        pagamento.preencher_numero_cartao(
-            CHECKOUT_CARD_NUMBER
-        )
+        pagamento.preencher_numero_cartao(CHECKOUT_CARD_NUMBER)
 
-        pagamento.preencher_validade_cartao(
-            CHECKOUT_CARD_EXPIRATION
-        )
+        pagamento.preencher_validade_cartao(CHECKOUT_CARD_EXPIRATION)
 
-        pagamento.preencher_codigo_seguranca(
-            CHECKOUT_CARD_CVV
-        )
+        pagamento.preencher_codigo_seguranca(CHECKOUT_CARD_CVV)
         
-        pagamento.preencher_nome_cartao(
-            CHECKOUT_CARD_NAME
-        )
+        pagamento.preencher_nome_cartao(CHECKOUT_CARD_NAME)
         
         # CPF: requer CHECKOUT_CPF em configuracoes.py
         # e preencher_cpf() no Page Object.
@@ -296,6 +259,12 @@ def test_fluxo_compra(navegador):
 
         # Não capturar dados completos do cartão ou CVV.
         # Evidência do Step 3 deve ser mascarada.
+
+        capturar_evidencia(
+            navegador,
+            pasta_evidencia,
+            "09_Preenchimento do formulário - Step 3"
+        )
 
         # ====================================================
         # FINALIZAR PAGAMENTO
@@ -322,7 +291,7 @@ def test_fluxo_compra(navegador):
         capturar_evidencia(
             navegador,
             pasta_evidencia,
-            "11_confirmacao_compra"
+            "10_Mensagem de confirmação da compra encontrada."
         )
 
         logger.info("Compra confirmada: %s", mensagem)

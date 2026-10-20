@@ -1,0 +1,20 @@
+2026-10-20 08:58:19,701 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-20 08:58:19,762 - INFO - Home acessada - destaque do Catálogo na navbar
+2026-10-20 08:58:21,953 - INFO - Clique em catálogo na navbar
+2026-10-20 08:58:24,715 - INFO - Selecionando produto do primeiro step
+2026-10-20 08:58:27,762 - INFO - PDP do produto selecionado
+2026-10-20 08:58:30,278 - INFO - Destaque do minicart no header
+2026-10-20 08:58:38,427 - INFO - Clique no CHECK OUT do header
+2026-10-20 08:58:41,422 - INFO - Destaque do Produto selecionado e preço total,clique no CHECK OUT no carrinho
+2026-10-20 08:58:45,266 - INFO - Preenchimento do formulário - Step 1
+2026-10-20 08:58:49,730 - INFO - Preenchimento do formulário - Step 2
+2026-10-20 08:58:52,078 - INFO - Preenchimento do formulário - Step 3
+2026-10-20 08:58:53,386 - INFO - Clique no botão PAY NOW
+2026-10-20 08:58:53,630 - INFO - Validação da confirmação de compra
+2026-10-20 08:58:58,977 - INFO - Compra confirmada: Confirmation #3L0T5QNCH
+Thank you, Paulo!
+2026-10-20 08:58:58,978 - INFO - Teste de fluxo de compra executado com sucesso
+2026-10-20 08:58:58,978 - INFO - Status final: PASS
+2026-10-20 08:58:58,978 - INFO - ========== FIM DO TESTE ==========
+2026-10-20 08:59:00,685 - INFO - Relatório PDF gerado: reports\2026-10-20_08-58-17\relatorio_2026-10-20_08-58-17.pdf
+2026-10-20 08:59:27,967 - INFO - Relatório enviado por e-mail com sucesso.

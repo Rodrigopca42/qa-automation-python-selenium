@@ -15,7 +15,7 @@ class CheckOut1Page:
 
     CONTAINER_PRODUT1 = (By.XPATH, "//section/form/div[1]/div[2]")
     CONTAINER_PRODUT2 = (By.XPATH, "//section/form/div[1]/div[3]")
-
+    TOTAL_PRICE = (By.XPATH, "//form/div[2]/div[2]/h2")
     QUANTIDADE = (By.XPATH, "//div[2]/div[3]/input")
     DELETE = (By.XPATH, "//div[2]/div[5]/a")
     CONTINUE_SHOPPING = (By.XPATH, "//div[2]/div[1]/a")
@@ -50,7 +50,7 @@ class CheckOut1Page:
 
         self.driver.execute_script(
             """
-            arguments[0].style.border = '3px solid yellow';
+            arguments[0].style.border = '5px solid green';
             arguments[0].style.boxSizing = 'border-box';
             """,
             elemento

@@ -1,0 +1,16 @@
+2026-10-19 18:52:07,753 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-19 18:52:07,817 - INFO - Home acessada - destaque do Catálogo na navbar
+2026-10-19 18:52:10,044 - INFO - Clique em catálogo na navbar
+2026-10-19 18:52:10,045 - ERROR - Falha na execução do fluxo de compra
+Traceback (most recent call last):
+  File "c:\Estudo_Automacao_Python\tests\test_fluxo_compra.py", line 91, in test_fluxo_compra
+    navbar.acessar_catalogo()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Estudo_Automacao_Python\pages\navbar_page.py", line 35, in acessar_catalogo
+    *self.CATALOG
+     ^^^^^^^^^^^^
+AttributeError: 'NavBarPage' object has no attribute 'CATALOG'. Did you mean: 'CATALOGO'?
+2026-10-19 18:52:12,237 - INFO - Status final: FAIL
+2026-10-19 18:52:12,238 - INFO - ========== FIM DO TESTE ==========
+2026-10-19 18:52:12,948 - INFO - Relatório PDF gerado: reports\2026-10-19_18-52-05\relatorio_2026-10-19_18-52-05.pdf
+2026-10-19 18:52:21,989 - INFO - Relatório enviado por e-mail com sucesso.

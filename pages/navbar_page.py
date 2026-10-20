@@ -8,7 +8,7 @@ class NavBarPage:
     # ========================================================
 
     HOME = (By.XPATH, '//*[@id="main-menu"]/li[1]/a')
-    CATALOG = (By.XPATH, '//*[@id="main-menu"]/li[2]/a')
+    CATALOGO = (By.CSS_SELECTOR, '#main-menu a[href="/collections/all"]')
     BLOG = (By.XPATH, '//*[@id="main-menu"]/li[3]/a')
     ABOUT_US = (By.XPATH, '//*[@id="main-menu"]/li[4]/a')
 
@@ -32,7 +32,7 @@ class NavBarPage:
 
     def acessar_catalogo(self):
         link_catalogo = self.driver.find_element(
-            *self.CATALOG
+            *self.CATALOGO
         )
 
         link_catalogo.click()
