@@ -1,8 +1,0 @@
-2026-10-07 09:39:37,572 - INFO - ========== INÍCIO DO TESTE: ADICIONAR PRODUTOS AO CARRINHO ==========
-2026-10-07 09:39:37,630 - INFO - Home acessada
-2026-10-07 09:39:39,834 - INFO - Clique em Catálogo na navbar
-2026-10-07 09:39:42,573 - INFO - Selecionando o primeiro produto no catálogo
-2026-10-07 09:39:45,514 - INFO - PDP do primeiro produto acessada
-2026-10-07 09:39:48,013 - INFO - Primeiro produto adicionado ao minicart
-2026-10-07 09:39:53,183 - ERROR - Erro durante a execução do teste: Message: 
-

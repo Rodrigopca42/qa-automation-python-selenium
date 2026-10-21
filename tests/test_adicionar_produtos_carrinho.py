@@ -1,10 +1,7 @@
 import os
-from datetime import datetime
 
 from utils.evidencia import *
 from utils.logger import configurar_logger
-from utils.relatorio_pdf import gerar_relatorio_pdf
-from utils.email_sender import enviar_relatorio_email
 
 from config.configuracoes import *
 
@@ -19,43 +16,39 @@ from pages.cart_page import CartPage
 # IDENTIFICAÇÃO DA EXECUÇÃO
 # ============================================================
 
-id_execucao = datetime.now().strftime(
-    '%Y-%m-%d_%H-%M-%S'
-)
+def preparar_execucao(request):
+
+    id_execucao = request.config.id_execucao
+
+    pasta_evidencia = os.path.join(
+        "evidências",
+        id_execucao,
+        "adicionar_produtos_carrinho"
+    )
+
+    pasta_execucao = os.path.join(
+        "logs",
+        id_execucao,
+        "adicionar_produtos_carrinho"
+    )
+
+    os.makedirs(pasta_evidencia, exist_ok=True)
+    os.makedirs(pasta_execucao, exist_ok=True)
+
+    return pasta_evidencia, pasta_execucao
 
 
 # ============================================================
 # PASTAS DA EXECUÇÃO
 # ============================================================
 
-pasta_evidencia = os.path.join(
-    "evidências",
-    id_execucao
-)
 
-pasta_execucao = os.path.join(
-    "logs",
-    id_execucao
-)
-
-pasta_relatorio = os.path.join(
-    "reports",
-    id_execucao
-)
-
-os.makedirs(pasta_evidencia, exist_ok=True)
-os.makedirs(pasta_execucao, exist_ok=True)
-os.makedirs(pasta_relatorio, exist_ok=True)
 
 
 # ============================================================
 # CONFIGURAÇÃO DO LOG
 # ============================================================
 
-logger, caminho_log = configurar_logger(
-    pasta_execucao,
-    "teste_adicionar_produtos_carrinho.log"
-)
 
 
 # ============================================================
@@ -72,9 +65,16 @@ caminho_cenario = os.path.join(
 # TESTE
 # ============================================================
 
-def test_adicionar_produtos_ao_carrinho(navegador):
+def test_adicionar_produtos_ao_carrinho(navegador, request):
 
     driver = navegador
+
+    pasta_evidencia, pasta_execucao = preparar_execucao(request)
+
+    logger, caminho_log = configurar_logger(
+        pasta_execucao,
+        "teste_adicionar_produtos_carrinho.log"
+    )
 
     status_teste = "FAIL"
 
@@ -314,54 +314,4 @@ def test_adicionar_produtos_ao_carrinho(navegador):
 
         raise
 
-    finally:
-
-        caminho_pdf = gerar_relatorio_pdf(
-            id_execucao=id_execucao,
-            caminho_cenario=caminho_cenario,
-            pasta_evidencias=pasta_evidencia,
-            caminho_log=caminho_log,
-            pasta_relatorio=pasta_relatorio,
-            status=status_teste,
-            ambiente=AMBIENTE
-        )
-
-        print(
-            f"\nRelatório PDF gerado em: {caminho_pdf}"
-        )
-
-        # ========================================================
-        # ENVIO DO RELATÓRIO POR E-MAIL
-        # ========================================================
-
-        email_destinatario = os.getenv(
-            "EMAIL_DESTINATARIO"
-        )
-
-        if not email_destinatario:
-            raise ValueError(
-                "A variável EMAIL_DESTINATARIO não foi configurada."
-            )
-
-        enviar_relatorio_email(
-            caminho_pdf=caminho_pdf,
-            destinatario=email_destinatario,
-            assunto=(
-                f"Relatório de Automação - "
-                f"Adicionar Produtos ao Carrinho - "
-                f"{status_teste}"
-            ),
-            corpo=(
-                f"Olá,\n\n"
-                f"Segue em anexo o relatório da execução "
-                f"do teste 'Adicionar Produtos ao Carrinho'.\n\n"
-                f"Status: {status_teste}\n"
-                f"Ambiente: {AMBIENTE}\n"
-                f"Execução: {id_execucao}\n\n"
-                f"Relatório gerado automaticamente."
-            )
-        )
-
-        print(
-            f"E-mail enviado para: {email_destinatario}"
-        )
+   
