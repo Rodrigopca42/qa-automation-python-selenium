@@ -1,6 +1,5 @@
 
 import os
-from datetime import datetime
 
 from config.configuracoes import *
 
@@ -16,27 +15,30 @@ from pages.confirmation_page import ConfirmationPage
 
 from utils.evidencia import *
 from utils.logger import configurar_logger
-from utils.relatorio_pdf import gerar_relatorio_pdf
-from utils.email_sender import enviar_relatorio_email
-
-from config.configuracoes import EMAIL_DESTINATARIO
-
 
 # ====================================================
 # CONFIGURAÇÃO DA EXECUÇÃO
 # ====================================================
+def preparar_execucao(request):
 
-id_execucao = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    id_execucao = request.config.id_execucao
 
-pasta_evidencia = os.path.join("evidências", id_execucao)
-pasta_log = os.path.join("logs", id_execucao)
-pasta_relatorio = os.path.join("reports", id_execucao)
+    pasta_evidencia = os.path.join(
+        "evidências",
+        id_execucao,
+        "fluxo_compra"
+    )
 
-os.makedirs(pasta_evidencia, exist_ok=True)
-os.makedirs(pasta_log, exist_ok=True)
-os.makedirs(pasta_relatorio, exist_ok=True)
+    pasta_log = os.path.join(
+        "logs",
+        id_execucao,
+        "fluxo_compra"
+    )
 
-logger, caminho_log = configurar_logger(pasta_log)
+    os.makedirs(pasta_evidencia, exist_ok=True)
+    os.makedirs(pasta_log, exist_ok=True)
+
+    return pasta_evidencia, pasta_log
 
 caminho_bdd = os.path.join(
     "cenarios",
@@ -48,7 +50,13 @@ caminho_bdd = os.path.join(
 # TESTE - FLUXO COMPLETO DE COMPRA
 # ====================================================
 
-def test_fluxo_compra(navegador):
+def test_fluxo_compra(navegador, request):
+
+    pasta_evidencia, pasta_log = preparar_execucao(request)
+
+    logger, caminho_log = configurar_logger(
+        pasta_log
+    )
 
     status = "FAIL"
 
@@ -314,46 +322,9 @@ def test_fluxo_compra(navegador):
 
         raise
 
-    
     finally:
+
         logger.info("Status final: %s", status)
         logger.info("========== FIM DO TESTE ==========")
-
-        caminho_pdf = None
-
-        try:
-            caminho_pdf = gerar_relatorio_pdf(
-                id_execucao=id_execucao,
-                caminho_cenario=caminho_bdd,
-                pasta_evidencias=pasta_evidencia,
-                caminho_log=caminho_log,
-                pasta_relatorio=pasta_relatorio,
-                status=status,
-                ambiente=AMBIENTE
-            )
-
-            logger.info("Relatório PDF gerado: %s", caminho_pdf)
-
-        except Exception:
-            logger.exception("Falha na geração do relatório PDF.")
-
-        if caminho_pdf:
-            try:
-                enviar_relatorio_email(
-                    caminho_pdf=caminho_pdf,
-                    destinatario=EMAIL_DESTINATARIO,
-                    assunto=f"Relatório QA - Fluxo de Compra - {status}",
-                    corpo=(
-                        "Segue o relatório do teste de fluxo "
-                        f"de compra. Status: {status}."
-                    )
-                )
-
-                logger.info(
-                    "Relatório enviado por e-mail com sucesso."
-                )
-
-            except Exception:
-                logger.exception(
-                    "Falha ao enviar o relatório por e-mail."
-                )
+    
+    

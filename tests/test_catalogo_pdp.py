@@ -1,9 +1,7 @@
 import os
-from datetime import datetime
 
 from utils.evidencia import *
 from utils.logger import configurar_logger
-from utils.relatorio_pdf import gerar_relatorio_pdf
 
 from config.configuracoes import *
 
@@ -11,51 +9,37 @@ from pages.navbar_page import NavBarPage
 from pages.catalog_page import CatalogPage
 from pages.pdp_page import PdpPage
 
-from utils.email_sender import enviar_relatorio_email
-
 
 # ============================================================
 # IDENTIFICAÇÃO DA EXECUÇÃO
 # ============================================================
 
-id_execucao = datetime.now().strftime(
-    '%Y-%m-%d_%H-%M-%S'
-)
 
 
 # ============================================================
-# PASTAS DA EXECUÇÃO
+# PREPARAÇÃO DA EXECUÇÃO
 # ============================================================
 
-pasta_evidencia = os.path.join(
-    'evidências',
-    id_execucao
-)
+def preparar_execucao(request):
 
-pasta_execucao = os.path.join(
-    "logs",
-    id_execucao
-)
+    id_execucao = request.config.id_execucao
 
+    pasta_evidencia = os.path.join(
+        "evidências",
+        id_execucao,
+        "catalogo_pdp"
+    )
 
-pasta_relatorio = os.path.join(
-    'reports',
-    id_execucao
-)
+    pasta_execucao = os.path.join(
+        "logs",
+        id_execucao,
+        "catalogo_pdp"
+    )
 
-os.makedirs(pasta_evidencia, exist_ok=True)
-os.makedirs(pasta_execucao, exist_ok=True)
-os.makedirs(pasta_relatorio, exist_ok=True)
+    os.makedirs(pasta_evidencia, exist_ok=True)
+    os.makedirs(pasta_execucao, exist_ok=True)
 
-
-# ============================================================
-# CONFIGURAÇÃO DE LOG
-# ============================================================
-
-logger, caminho_log = configurar_logger(
-    pasta_execucao,
-    "teste_catalogo_pdp.log"
-)
+    return pasta_evidencia, pasta_execucao
 
 
 # ============================================================
@@ -67,28 +51,20 @@ caminho_cenario = os.path.join(
     "CT-CATALOGO-PDP-001.md"
 )
 
-
-# ============================================================
-# VARIÁVEIS DO TESTE
-# ============================================================
-
-status_teste = "FAIL"
-
-caminho_log = os.path.join(
-    pasta_execucao,
-    "teste_catalogo_pdp.log"
-)
-
-
 # ============================================================
 # TESTE
 # ============================================================
 
-def test_acessar_catalogo_e_visualizar_produto(navegador):
+def test_acessar_catalogo_e_visualizar_produto(navegador, request):
 
     driver = navegador
 
-    status_teste = "FAIL"
+    pasta_evidencia, pasta_execucao = preparar_execucao(request)
+
+    logger, caminho_log = configurar_logger(
+        pasta_execucao,
+        "teste_catalogo_pdp.log"
+    )
 
     try:
 
@@ -181,8 +157,6 @@ def test_acessar_catalogo_e_visualizar_produto(navegador):
         # FINALIZAÇÃO
         # ====================================================
 
-        status_teste = "PASS"
-
         logger.info(
             'Teste executado com sucesso'
         )
@@ -207,37 +181,4 @@ def test_acessar_catalogo_e_visualizar_produto(navegador):
 
         raise
 
-    finally:
-
-        caminho_pdf = gerar_relatorio_pdf(
-            id_execucao=id_execucao,
-            caminho_cenario=caminho_cenario,
-            pasta_evidencias=pasta_evidencia,
-            caminho_log=caminho_log,
-            pasta_relatorio=pasta_relatorio,
-            status=status_teste,
-            ambiente=AMBIENTE
-        )
-
-        print(
-            f"\nRelatório PDF gerado em: {caminho_pdf}"
-        )
-
-        enviar_relatorio_email(
-            caminho_pdf=caminho_pdf,
-            destinatario=EMAIL_DESTINATARIO,
-            assunto=(
-                f"Relatório de execução - "
-                f"{status_teste} - "
-                f"{id_execucao}"
-            ),
-            corpo=(
-                "Olá,\n\n"
-                "Segue em anexo o relatório da execução "
-                "automatizada de testes.\n\n"
-                f"ID da execução: {id_execucao}\n"
-                f"Ambiente: {AMBIENTE}\n"
-                f"Status: {status_teste}\n\n"
-                "Relatório gerado automaticamente."
-            )
-        )
+    
