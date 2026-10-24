@@ -10,6 +10,9 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.platypus import *
 
+from reportlab.graphics.shapes import Drawing
+from reportlab.graphics.charts.piecharts import Pie
+
 
 # ============================================================
 # CONFIGURAÇÕES VISUAIS
@@ -627,3 +630,371 @@ def gerar_relatorio_pdf(
     )
 
     return str(caminho_pdf)
+
+# ============================================================
+# RELATÓRIO CONSOLIDADO DA SUÍTE
+# ============================================================
+
+def gerar_relatorio_consolidado(
+    id_execucao,
+    resumo,
+    ambiente="Homologação"
+):
+    """
+    Gera um único relatório PDF para a suíte de testes.
+
+    O relatório utilizará:
+    - Resultados consolidados do Pytest
+    - Duração individual dos testes
+    - Cenários BDD
+    - Evidências
+    - Logs
+    - Gráfico de resultados
+    """
+
+    pasta_relatorio = Path("reports") / id_execucao
+
+    pasta_relatorio.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    caminho_pdf = (
+        pasta_relatorio /
+        f"relatorio_consolidado_{id_execucao}.pdf"
+    )
+
+    # Configurações visuais existentes
+    configurar_fontes()
+    estilos = criar_estilos()
+
+    # Configuração do documento
+    documento = SimpleDocTemplate(
+        str(caminho_pdf),
+        pagesize=A4,
+        rightMargin=2 * cm,
+        leftMargin=2 * cm,
+        topMargin=3 * cm,
+        bottomMargin=2 * cm
+    )
+
+    elementos = []
+
+    # Título
+    elementos.append(
+        Paragraph(
+            "RELATÓRIO CONSOLIDADO DE TESTES",
+            estilos["titulo"]
+        )
+    )
+
+    elementos.append(Spacer(1, 0.5 * cm))
+
+    # Identificação da execução
+    elementos.append(
+        Paragraph(
+            f"<b>Execução:</b> {id_execucao}",
+            estilos["normal"]
+        )
+    )
+
+    elementos.append(
+        Paragraph(
+            f"<b>Ambiente:</b> {ambiente}",
+            estilos["normal"]
+        )
+    )
+
+    elementos.append(Spacer(1, 0.5 * cm))
+
+    # Resumo consolidado da execução
+    elementos.append(
+        Paragraph(
+            "RESUMO DA EXECUÇÃO",
+            estilos["secao"]
+        )
+    )
+
+    dados_resumo = [
+        ["Indicador", "Resultado"],
+        ["Total de testes", str(resumo.get("total", 0))],
+        ["Aprovados", str(resumo.get("aprovados", 0))],
+        ["Reprovados", str(resumo.get("reprovados", 0))],
+        ["Erros", str(resumo.get("erros", 0))],
+        ["Ignorados", str(resumo.get("ignorados", 0))],
+        [
+            "Percentual de aprovação",
+            f'{resumo.get("percentual_aprovados", 0):.1f}%'
+        ],
+        [
+            "Percentual de reprovação",
+            f'{resumo.get("percentual_reprovados", 0):.1f}%'
+        ]
+    ]
+
+    tabela_resumo = Table(
+        dados_resumo,
+        colWidths=[10 * cm, 6 * cm]
+    )
+
+    tabela_resumo.setStyle(
+        TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), LARANJA),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("FONTNAME", (0, 0), (-1, 0), FONT_BOLD),
+            ("BACKGROUND", (0, 1), (-1, -1), CINZA_CLARO),
+            ("GRID", (0, 0), (-1, -1), 0.5, CINZA_BORDA),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("TOPPADDING", (0, 0), (-1, -1), 8),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 8)
+        ])
+    )
+
+    elementos.append(tabela_resumo)
+
+    # Gráfico consolidado dos resultados
+    elementos.append(Spacer(1, 0.5 * cm))
+
+    elementos.append(
+        Paragraph(
+            "DISTRIBUIÇÃO DOS RESULTADOS",
+            estilos["secao"]
+        )
+    )
+
+    valores = [
+        resumo.get("aprovados", 0),
+        resumo.get("reprovados", 0),
+        resumo.get("erros", 0),
+        resumo.get("ignorados", 0)
+    ]
+
+    if sum(valores) > 0:
+        grafico = Drawing(400, 200)
+
+        pizza = Pie()
+        pizza.x = 120
+        pizza.y = 10
+        pizza.width = 180
+        pizza.height = 180
+
+        pizza.data = valores
+        pizza.labels = [
+            "Aprovados",
+            "Reprovados",
+            "Erros",
+            "Ignorados"
+        ]
+
+        pizza.slices[0].fillColor = VERDE
+        pizza.slices[1].fillColor = VERMELHO
+        pizza.slices[2].fillColor = LARANJA
+        pizza.slices[3].fillColor = CINZA
+
+        grafico.add(pizza)
+        elementos.append(grafico)
+
+    # Resultados individuais dos testes
+    elementos.append(Spacer(1, 0.5 * cm))
+
+    titulo_resultados = Paragraph(
+        "RESULTADOS INDIVIDUAIS",
+        estilos["secao"]
+    )
+
+    dados_testes = [
+        ["Teste", "Status", "Duração"]
+    ]
+
+    for resultado in resumo.get("resultados", []):
+        nome_teste = resultado.get("teste", "")
+        status = resultado.get("status", "")
+        duracao = resultado.get("duracao", 0)
+
+        minutos, segundos = divmod(duracao, 60)
+        tempo_formatado = f"{int(minutos):02d}:{segundos:05.2f}"
+
+        dados_testes.append([
+            Paragraph(
+                escapar_html(nome_teste),
+                estilos["normal"]
+            ),
+            status,
+            tempo_formatado
+        ])
+
+    tabela_testes = Table(
+        dados_testes,
+        colWidths=[10 * cm, 3 * cm, 3 * cm],
+        repeatRows=1
+    )
+
+    tabela_testes.setStyle(
+        TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), LARANJA),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("FONTNAME", (0, 0), (-1, 0), FONT_BOLD),
+            ("BACKGROUND", (0, 1), (-1, -1), CINZA_CLARO),
+            ("GRID", (0, 0), (-1, -1), 0.5, CINZA_BORDA),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("TOPPADDING", (0, 0), (-1, -1), 8),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 8)
+        ])
+    )
+
+    elementos.append(
+        KeepTogether([
+            titulo_resultados,
+            Spacer(1, 0.2 * cm),
+            tabela_testes
+        ])
+    )
+
+    # Detalhamento dos cenários BDD
+    for resultado in resumo.get("resultados", []):
+
+        nome_teste = resultado.get("teste", "")
+        caminho_cenario = resultado.get("caminho_cenario", "")
+
+        elementos.append(PageBreak())
+
+        elementos.append(
+            Paragraph(
+                escapar_html(nome_teste),
+                estilos["secao"]
+            )
+        )
+
+        elementos.append(Spacer(1, 0.3 * cm))
+
+        elementos.append(
+            Paragraph(
+                "CENÁRIO BDD",
+                estilos["normal_bold"]
+            )
+        )
+
+        elementos.append(Spacer(1, 0.2 * cm))
+
+        if caminho_cenario and os.path.isfile(caminho_cenario):
+
+            conteudo_bdd = ler_arquivo(caminho_cenario)
+
+            for linha in conteudo_bdd.splitlines():
+
+                if not linha.strip():
+                    elementos.append(Spacer(1, 0.15 * cm))
+                    continue
+
+                elementos.append(
+                    Paragraph(
+                        escapar_html(linha),
+                        estilos["bdd"]
+                    )
+                )
+
+        else:
+            elementos.append(
+                Paragraph(
+                    "Cenário BDD não encontrado.",
+                    estilos["normal"]
+                )
+            )
+
+        # Evidências do teste
+        elementos.append(Spacer(1, 0.5 * cm))
+
+        elementos.append(
+            Paragraph(
+                "EVIDÊNCIAS",
+                estilos["normal_bold"]
+            )
+        )
+
+        pasta_evidencias = resultado.get("pasta_evidencias", "")
+
+        if pasta_evidencias and os.path.isdir(pasta_evidencias):
+
+            imagens = sorted(
+                [
+                    arquivo for arquivo in Path(pasta_evidencias).iterdir()
+                    if arquivo.is_file()
+                    and arquivo.suffix.lower() in (".png", ".jpg", ".jpeg")
+                ],
+                key=lambda arquivo: arquivo.name
+            )
+
+            for imagem in imagens:
+
+                bloco_evidencia = [
+                    Paragraph(
+                        escapar_html(imagem.name),
+                        estilos["evidencia"]
+                    ),
+                    criar_imagem_evidencia(
+                        str(imagem),
+                        16 * cm,
+                        12 * cm
+                    ),
+                    Spacer(1, 0.3 * cm)
+                ]
+
+                elementos.append(
+                    KeepTogether(bloco_evidencia)
+                )
+
+        else:
+            elementos.append(
+                Paragraph(
+                    "Pasta de evidências não encontrada.",
+                    estilos["normal"]
+                )
+            )
+
+    # Logs do teste
+        elementos.append(Spacer(1, 0.5 * cm))
+
+        elementos.append(
+            Paragraph(
+                "LOGS DA EXECUÇÃO",
+                estilos["normal_bold"]
+            )
+        )
+
+        pasta_logs = resultado.get("pasta_logs", "")
+        nome_log = resultado.get("nome_log", "")
+
+        caminho_log = (
+            os.path.join(pasta_logs, nome_log)
+            if pasta_logs and nome_log
+            else ""
+        )
+
+        if caminho_log and os.path.isfile(caminho_log):
+            conteudo_log = ler_arquivo(caminho_log)
+
+            for linha in conteudo_log.splitlines():
+                if linha.strip():
+                    elementos.append(
+                        Paragraph(
+                            escapar_html(linha),
+                            estilos["log"]
+                        )
+                    )
+        else:
+            elementos.append(
+                Paragraph(
+                    "Arquivo de log não encontrado.",
+                    estilos["normal"]
+                )
+            )    
+
+    # Geração do documento
+    documento.build(
+        elementos,
+        onFirstPage=desenhar_fundo,
+        onLaterPages=desenhar_fundo
+    )
+
+    return str(caminho_pdf)
+
