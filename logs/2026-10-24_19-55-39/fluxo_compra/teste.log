@@ -1,0 +1,17 @@
+2026-10-24 19:56:48,529 - INFO - ========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========
+2026-10-24 19:56:48,572 - INFO - Home acessada - destaque do Catálogo na navbar
+2026-10-24 19:56:50,797 - INFO - Clique em catálogo na navbar
+2026-10-24 19:56:53,502 - INFO - Selecionando produto do primeiro step
+2026-10-24 19:56:56,855 - INFO - Destaque do minicart no header
+2026-10-24 19:57:05,028 - INFO - Clique no CHECK OUT do header
+2026-10-24 19:57:08,039 - INFO - Destaque do Produto selecionado e preço total,clique no CHECK OUT no carrinho
+2026-10-24 19:57:11,855 - INFO - Preenchimento do formulário - Step 1
+2026-10-24 19:57:16,687 - INFO - Preenchimento do formulário - Step 2
+2026-10-24 19:57:19,018 - INFO - Preenchimento do formulário - Step 3
+2026-10-24 19:57:22,500 - INFO - Clique no botão PAY NOW
+2026-10-24 19:57:22,718 - INFO - Validação da confirmação de compra
+2026-10-24 19:57:27,995 - INFO - Compra confirmada: Confirmation #0QQPQQEKE
+Thank you, Paulo!
+2026-10-24 19:57:27,995 - INFO - Teste de fluxo de compra executado com sucesso
+2026-10-24 19:57:27,996 - INFO - Status final: PASS
+2026-10-24 19:57:27,996 - INFO - ========== FIM DO TESTE ==========

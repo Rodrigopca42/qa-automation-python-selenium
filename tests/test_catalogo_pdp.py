@@ -9,13 +9,6 @@ from pages.navbar_page import NavBarPage
 from pages.catalog_page import CatalogPage
 from pages.pdp_page import PdpPage
 
-
-# ============================================================
-# IDENTIFICAÇÃO DA EXECUÇÃO
-# ============================================================
-
-
-
 # ============================================================
 # PREPARAÇÃO DA EXECUÇÃO
 # ============================================================
@@ -79,7 +72,7 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            '01_Home'
+            '01_Home com navbar, clicar na opção catalogo'
         )
 
         # ====================================================
@@ -95,7 +88,7 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            '02_catalogo'
+            '02_Catálogo PLP acessado'
         )
 
         # ====================================================
@@ -107,14 +100,14 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         catalogo.rolar_para_step_2()
 
         logger.info(
-            'Produto Grey Jacket localizado na PLP'
+            'Produto Noir Jacket localizado na PLP'
         )
 
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
-            '03_grey_jacket_na_plp',
-            catalogo.CARD_GREY_JACKET_COMPLET
+            '03_Produto Noir Jacket localizado na PLP',
+            catalogo.CARD_NOIR_JACKET_COMPLET
         )
 
         # ====================================================
@@ -122,7 +115,7 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         # ====================================================
 
         catalogo.acessar_produto(
-            catalogo.CARD_GREY_JACKET_COMPLET
+            catalogo.CARD_NOIR_JACKET_COMPLET
         )
 
         logger.info(
@@ -132,7 +125,7 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            '04_pdp'
+            '04_Produto selecionado: Grey Jacket'
         )
 
         # ====================================================
@@ -150,7 +143,7 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            '05_add_to_cart'
+            '05_Botão "ADD TO CART" acionado '
         )
 
         # ====================================================

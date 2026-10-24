@@ -82,7 +82,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            "01_Home"
+            "01_Home acessada"
         )
 
         # ====================================================
@@ -101,7 +101,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            "02_catalogo"
+            "02_Clique em Catálogo na navbar"
         )
 
         # ====================================================
@@ -117,7 +117,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
-            "03_produto_1_plp",
+            "03_Selecionando o produto do 1ª step do PLP",
             catalogo.CARD_BLACK_HEELS_COMPLET
         )
 
@@ -138,7 +138,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
-            "04_produto_1_pdp",
+            "04_PDP do primeiro produto acessada",
             pdp.ADD_TO_CART
         )
 
@@ -149,15 +149,15 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         # ====================================================
 
         logger.info(
-    "Primeiro produto adicionado ao minicart"
-    )
+            "Primeiro produto adicionado ao minicart"
+        )
 
         aguardar_atualizacao_minicart()
 
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
-            "05_produto_1_minicart",
+            "05_Primeiro produto adicionado ao minicart",
             header.MINI_CART
         )
         # ====================================================
@@ -173,7 +173,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            "06_retorno_catalogo"
+            "06_Retorno ao catálogo - PLP"
         )
 
         # ====================================================
@@ -189,7 +189,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
-            "07_produto_2_plp",
+            "07_Selecionando o produto no 2ª step da PLP",
             catalogo.CARD_GREY_JACKET_COMPLET
         )
 
@@ -208,7 +208,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
-            "08_produto_2_pdp",
+            "08_PDP do segundo produto acessada",
             pdp.ADD_TO_CART
         )
 
@@ -227,7 +227,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
-            "09_produto_2_minicart",
+            "09_Segundo produto adicionado ao minicart",
             header.MINI_CART
         )
 
@@ -236,7 +236,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         # ====================================================
 
         logger.info(
-            "Retorno ao catálogo"
+            "Retorno ao catálogo - PLP"
         )
 
         navbar.acessar_catalogo()
@@ -244,7 +244,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            "10_retorno_catalogo"
+            "10_Retorno ao catálogo - PLP"
         )
 
        # ====================================================
@@ -265,7 +265,7 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            "11_produtos_no_carrinho"
+            "11_Acessando minicart para verificar os produtos"
         )
 
         # ====================================================
