@@ -308,17 +308,21 @@ def test_fluxo_compra(navegador, request):
 
         logger.info("Teste de fluxo de compra executado com sucesso")
 
-    
+   
+    except Exception as erro:
 
-    except Exception:
-
-        logger.exception("Falha na execução do fluxo de compra")
-
-        capturar_evidencia(
-            navegador,
-            pasta_evidencia,
-            "erro_fluxo_compra"
+        logger.error(
+            f'Falha na execução do teste | '
+            f'Tipo: {type(erro).__name__} | '
+            f'Detalhe: {str(erro).splitlines()[0]}'
         )
+
+        if navegador is not None:
+            capturar_evidencia(
+                navegador,
+                pasta_evidencia,
+                'erro_fluxo_compra'
+            )
 
         raise
 

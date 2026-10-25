@@ -67,13 +67,13 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
 
         driver.maximize_window()
 
-        logger.info('Home com navbar, clicar na opção catalogo')
-        
         capturar_evidencia(
             driver,
             pasta_evidencia,
             '01_Home com navbar, clicar na opção catalogo'
         )
+
+        logger.info('Home com navbar, clicar na opção catalogo')
 
         # ====================================================
         # ACESSAR CATÁLOGO
@@ -83,13 +83,13 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
 
         navbar.acessar_catalogo()
 
-        logger.info('Catálogo acessado')
-
         capturar_evidencia(
             driver,
             pasta_evidencia,
             '02_Catálogo PLP acessado'
         )
+
+        logger.info('Catálogo acessado')
 
         # ====================================================
         # SELECIONAR PRODUTO
@@ -99,15 +99,15 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
 
         catalogo.rolar_para_step_2()
 
-        logger.info(
-            'Produto Noir Jacket localizado na PLP'
-        )
-
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
             '03_Produto Noir Jacket localizado na PLP',
             catalogo.CARD_NOIR_JACKET_COMPLET
+        )
+
+        logger.info(
+            'Produto Noir Jacket localizado na PLP'
         )
 
         # ====================================================
@@ -118,14 +118,14 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
             catalogo.CARD_NOIR_JACKET_COMPLET
         )
 
-        logger.info(
-            'Produto selecionado: Grey Jacket'
-        )
-
         capturar_evidencia(
             driver,
             pasta_evidencia,
             '04_Produto selecionado: Grey Jacket'
+        )
+
+        logger.info(
+            'Produto selecionado: Grey Jacket'
         )
 
         # ====================================================
@@ -136,14 +136,14 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
 
         pdp.adicionar_ao_carrinho()
 
-        logger.info(
-            'ADD TO CART acionado'
-        )
-
         capturar_evidencia(
             driver,
             pasta_evidencia,
             '05_Botão "ADD TO CART" acionado '
+        )
+
+        logger.info(
+            'ADD TO CART acionado'
         )
 
         # ====================================================
@@ -161,11 +161,12 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
     except Exception as erro:
 
         logger.error(
-            f'Erro durante a execução do teste: {erro}'
+            f'Falha na execução do teste | '
+            f'Tipo: {type(erro).__name__} | '
+            f'Detalhe: {str(erro).splitlines()[0]}'
         )
 
         if driver is not None:
-
             capturar_evidencia(
                 driver,
                 pasta_evidencia,

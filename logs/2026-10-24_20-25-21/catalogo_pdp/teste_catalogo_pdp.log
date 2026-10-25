@@ -1,0 +1,5 @@
+2026-10-24 20:26:09,425 - INFO - === INÍCIO DO TESTE DE CATÁLOGO E PDP ===
+2026-10-24 20:26:09,463 - INFO - Home com navbar, clicar na opção catalogo
+2026-10-24 20:26:12,387 - INFO - Catálogo acessado
+2026-10-24 20:26:14,558 - INFO - Produto Noir Jacket localizado na PLP
+2026-10-24 20:26:14,567 - ERROR - Falha na execução do teste | Tipo: NoSuchElementException | Detalhe: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="product-5."]"}

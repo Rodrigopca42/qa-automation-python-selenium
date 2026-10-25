@@ -77,21 +77,17 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         # HOME
         # ====================================================
 
-        logger.info("Home acessada")
-
         capturar_evidencia(
             driver,
             pasta_evidencia,
             "01_Home acessada"
         )
 
+        logger.info("Home acessada")
+
         # ====================================================
         # ACESSAR CATÁLOGO
-        # ====================================================
-
-        logger.info(
-            "Clique em Catálogo na navbar"
-        )
+        # ===================================================
 
         navbar = NavBarPage(driver)
         header = HeaderPage(driver)
@@ -104,13 +100,13 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
             "02_Clique em Catálogo na navbar"
         )
 
+        logger.info(
+            "Clique em Catálogo na navbar"
+        )
+
         # ====================================================
         # PRODUTO 1 - STEP 1
         # ====================================================
-
-        logger.info(
-            "Selecionando o primeiro produto no catálogo"
-        )
 
         catalogo = CatalogPage(driver)
 
@@ -121,6 +117,8 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
             catalogo.CARD_BLACK_HEELS_COMPLET
         )
 
+        logger.info("Selecionando o primeiro produto no catálogo")
+
         catalogo.acessar_produto(
             catalogo.CARD_BLACK_HEELS_COMPLET
         )
@@ -128,10 +126,6 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         # ====================================================
         # PDP - PRODUTO 1
         # ====================================================
-
-        logger.info(
-            "PDP do primeiro produto acessada"
-        )
 
         pdp = PdpPage(driver)
 
@@ -141,6 +135,8 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
             "04_PDP do primeiro produto acessada",
             pdp.ADD_TO_CART
         )
+
+        logger.info("PDP do primeiro produto acessada")
 
         pdp.adicionar_ao_carrinho()
 
@@ -285,20 +281,20 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
         logger.info(
             "========== FIM DO TESTE =========="
         )
+
     except Exception as erro:
 
         logger.error(
-            f"Erro durante a execução do teste: {erro}"
+            f'Falha na execução do teste | '
+            f'Tipo: {type(erro).__name__} | '
+            f'Detalhe: {str(erro).splitlines()[0]}'
         )
 
         if driver is not None:
-
             capturar_evidencia(
                 driver,
                 pasta_evidencia,
-                "erro_adicionar_produtos_carrinho"
+                'erro_adicionar_produtos_carrinho'
             )
 
         raise
-
-   
