@@ -1,8 +1,0 @@
-2026-10-24 17:53:34,312 - INFO - === INÍCIO DO TESTE DE CATÁLOGO E PDP ===
-2026-10-24 17:53:34,347 - INFO - Home com navbar, clicar na opção catalogo
-2026-10-24 17:53:37,385 - INFO - Catálogo acessado
-2026-10-24 17:53:39,553 - INFO - Produto Grey Jacket localizado na PLP
-2026-10-24 17:53:42,613 - INFO - Produto selecionado: Grey Jacket
-2026-10-24 17:53:45,102 - INFO - ADD TO CART acionado
-2026-10-24 17:53:47,210 - INFO - Teste executado com sucesso
-2026-10-24 17:53:47,211 - INFO - ========== FIM DO TESTE ==========
