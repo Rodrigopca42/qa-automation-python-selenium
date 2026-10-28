@@ -74,6 +74,8 @@ def test_fluxo_compra(navegador, request):
         logger.info("========== INÍCIO DO TESTE DE FLUXO DE COMPRA ==========")
 
         navegador.maximize_window()
+        print(f"Resolução da janela: {navegador.get_window_size()}")
+        print(f"Área útil da página: {navegador.execute_script('return [window.innerWidth, window.innerHeight]')}")
 
         # ====================================================
         # HOME
