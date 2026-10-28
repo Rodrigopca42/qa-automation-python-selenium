@@ -1,0 +1,15 @@
+2026-10-25 12:16:59,536 - INFO - ========== INÍCIO DO TESTE: ADICIONAR PRODUTOS AO CARRINHO ==========
+2026-10-25 12:17:01,768 - INFO - Home acessada
+2026-10-25 12:17:04,511 - INFO - Clique em Catálogo na navbar
+2026-10-25 12:17:06,711 - INFO - Selecionando o primeiro produto no catálogo
+2026-10-25 12:17:09,693 - INFO - PDP do primeiro produto acessada
+2026-10-25 12:17:10,083 - INFO - Primeiro produto adicionado ao minicart
+2026-10-25 12:17:18,231 - INFO - Retorno ao catálogo
+2026-10-25 12:17:21,206 - INFO - Selecionando outro produto no segundo step
+2026-10-25 12:17:24,497 - INFO - PDP do segundo produto acessada
+2026-10-25 12:17:26,978 - INFO - Segundo produto adicionado ao minicart
+2026-10-25 12:17:35,139 - INFO - Retorno ao catálogo - PLP
+2026-10-25 12:17:38,151 - INFO - Acessando minicart para verificar os produtos
+2026-10-25 12:17:40,370 - INFO - Produtos verificados no minicart
+2026-10-25 12:17:40,370 - INFO - Sucesso
+2026-10-25 12:17:40,370 - INFO - ========== FIM DO TESTE ==========

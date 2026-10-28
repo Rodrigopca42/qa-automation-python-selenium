@@ -1,0 +1,58 @@
+name: Testes Automatizados QA
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  executar-testes:
+    name: Executar testes automatizados
+    runs-on: ubuntu-latest
+
+    env:
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_USUARIO: ${{ secrets.SMTP_USUARIO }}
+      SMTP_SENHA: ${{ secrets.SMTP_SENHA }}
+
+      EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+
+      USUARIO_TESTE: ${{ secrets.USUARIO_TESTE }}
+      SENHA_TESTE: ${{ secrets.SENHA_TESTE }}
+
+      CHECKOUT_EMAIL: ${{ secrets.CHECKOUT_EMAIL }}
+      CHECKOUT_CARD_NUMBER: ${{ secrets.CHECKOUT_CARD_NUMBER }}
+      CHECKOUT_CARD_EXPIRATION: ${{ secrets.CHECKOUT_CARD_EXPIRATION }}
+      CHECKOUT_CARD_CVV: ${{ secrets.CHECKOUT_CARD_CVV }}
+      CHECKOUT_CARD_NAME: ${{ secrets.CHECKOUT_CARD_NAME }}
+      CHECKOUT_CPF: ${{ secrets.CHECKOUT_CPF }}
+
+    steps:
+      - name: Baixar codigo do repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+  
+      - name: Executar testes automatizados
+        run: python -m pytest -v    
+
+      - name: Armazenar relatorios e evidencias
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultados-testes-${{ github.run_number }}
+          path: |
+            reports/
+            evidências/
+            logs/
+          if-no-files-found: warn

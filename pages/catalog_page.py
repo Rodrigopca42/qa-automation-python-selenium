@@ -8,7 +8,7 @@ class CatalogPage:
     CARD_BROWN_SHADES_COMPLET = (By.ID, "product-3")
 
     CARD_GREY_JACKET_COMPLET = (By.ID, "product-4")
-    CARD_NOIR_JACKET_COMPLET = (By.ID, "product-5.")
+    CARD_NOIR_JACKET_COMPLET = (By.ID, "product-5")
     CARD_STRIPED_TOP_COMPLET = (By.ID, "product-6")
 
     CARD_WHITE_SANDALS_COMPLET = (By.ID, "product-7")

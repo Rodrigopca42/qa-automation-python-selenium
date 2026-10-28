@@ -4,18 +4,25 @@ from config.configuracoes import *
 from datetime import datetime
 from utils.relatorio_pdf import gerar_relatorio_consolidado
 from utils.email_sender import enviar_relatorio_email
+from selenium.webdriver.chrome.options import Options
 import os
 
 
 @pytest.fixture
 def navegador():
-    driver = webdriver.Chrome()
+
+    options = Options()
+
+    if os.getenv("CI") == "true":
+        options.add_argument("--headless=new")
+        options.add_argument("--window-size=1920,1080")
+
+    driver = webdriver.Chrome(options=options)
     driver.get(URL_HOME)
 
     yield driver
 
     driver.quit()
-
 
 # ====================================================
 # COLETA DOS RESULTADOS DOS TESTES
