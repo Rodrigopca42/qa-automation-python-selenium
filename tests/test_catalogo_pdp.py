@@ -121,11 +121,11 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            '04_Produto selecionado: Grey Jacket'
+            '04_Produto selecionado - Grey Jacket'
         )
 
         logger.info(
-            'Produto selecionado: Grey Jacket'
+            'Produto selecionado - Grey Jacket'
         )
 
         # ====================================================
