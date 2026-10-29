@@ -102,12 +102,12 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         capturar_evidencia_destacada(
             driver,
             pasta_evidencia,
-            '03_Produto Noir Jacket localizado na PLP',
+            '03_Produto Grey Jacket localizado na PLP',
             catalogo.CARD_NOIR_JACKET_COMPLET
         )
 
         logger.info(
-            'Produto Noir Jacket localizado na PLP'
+            'Produto Grey Jacket localizado na PLP'
         )
 
         # ====================================================
@@ -139,7 +139,7 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
         capturar_evidencia(
             driver,
             pasta_evidencia,
-            '05_Botão "ADD TO CART" acionado '
+            '05_Botão ADD TO CART acionado '
         )
 
         logger.info(

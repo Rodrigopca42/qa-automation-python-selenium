@@ -1,10 +1,15 @@
 import os
 import time
+import re
 
 from config.configuracoes import (
     TEMPO_ESPERA_EVIDENCIA,
     TEMPO_ATUALIZACAO_MINICART
 )
+
+def normalizar_nome_evidencia(nome):
+    nome = re.sub(r'[<>:"/\\|?*\r\n]', "_", nome)
+    return nome.strip().rstrip(". ")
 
 def aguardar_carregamento():
     time.sleep(TEMPO_ESPERA_EVIDENCIA)
@@ -18,9 +23,11 @@ def capturar_evidencia(driver, pasta_execucao, nome):
 
     aguardar_carregamento()
 
+    nome_arquivo = normalizar_nome_evidencia(nome)
+
     caminho = os.path.join(
         pasta_execucao,
-        f"{nome}.png"
+        f"{nome_arquivo}.png"
     )
 
     sucesso = driver.save_screenshot(caminho)
@@ -55,9 +62,11 @@ def capturar_evidencia_destacada(
 
     aguardar_carregamento()
 
+    nome_arquivo = normalizar_nome_evidencia(nome)
+
     caminho = os.path.join(
         pasta_execucao,
-        f"{nome}.png"
+        f"{nome_arquivo}.png"
     )
 
     sucesso = driver.save_screenshot(caminho)
