@@ -16,15 +16,16 @@ class CheckOutPaymentPage:
 
     INPUT_EMAIL = (By.ID, "email")
     CHECK_BOX = (By.XPATH, "//div[2]/div[1]/div/label")
-    COUNTRY = (By.ID, "SelectPS33_32_2t_19_34_2p_2v_2t-22")
+    COUNTRY = (By.NAME, "countryCode")
     INPUT_FIRST_NAME = (By.XPATH, "//div[2]/div[1]/div/input")
     INPUT_LAST_NAME = (By.XPATH, "//div[2]/div[2]/div/input")
     INPUT_COMPANY = (By.XPATH, "//div[3]/div/div/input")
-    INPUT_POSTAL_CODE = (By.XPATH, "//div[4]/div/div/div/div/input")
+    INPUT_POSTAL_CODE = (By.ID, "postalCode")
     INPUT_STREET = (By.XPATH, "//div[5]/div[1]/div/div/input")
     INPUT_NUMBER = (By.XPATH, "//div[5]/div[2]/div/input")
     INPUT_COMPLEMENT = (By.XPATH, "//div[6]/div[1]/div/input")
     INPUT_NEIGHBORHOOD = (By.XPATH, "//div[6]/div[2]/div/input")
+    STATE = (By.NAME, "zone")
 
     # ====================================================
     # LOCATORS - STEP 2
@@ -159,6 +160,16 @@ class CheckOutPaymentPage:
     # STEP 1 - CONTATO E ENDEREÇO
     # ====================================================
 
+    def selecionar_pais(self, pais):
+        elemento = self.aguardar_elemento_clicavel(self.COUNTRY)
+
+        seletor = Select(elemento)
+        seletor.select_by_value(pais)
+
+        assert seletor.first_selected_option.get_attribute("value") == pais, (
+            f"País selecionado diferente do esperado: {pais}"
+        )
+
     def preencher_email(self, email):
         self.preencher_campo(self.INPUT_EMAIL, email)
 
@@ -192,6 +203,16 @@ class CheckOutPaymentPage:
     # ====================================================
     # STEP 2 - LOCALIZAÇÃO E TELEFONE
     # ====================================================
+
+    def selecionar_estado(self, estado):
+        elemento = self.aguardar_elemento_clicavel(self.STATE)
+
+        seletor = Select(elemento)
+        seletor.select_by_value(estado)
+
+        assert seletor.first_selected_option.get_attribute("value") == estado, (
+            f"Estado selecionado diferente do esperado: {estado}"
+        )
 
     def preencher_telefone(self, telefone):
         self.preencher_campo(self.INPUT_PHONE, telefone)

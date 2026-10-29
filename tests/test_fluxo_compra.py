@@ -197,6 +197,8 @@ def test_fluxo_compra(navegador, request):
 
         pagamento.preencher_email(CHECKOUT_EMAIL)
 
+        pagamento.selecionar_pais("BR")
+
         pagamento.preencher_primeiro_nome(
             DADOS_ENDERECO["nome"]
         )
@@ -224,6 +226,8 @@ def test_fluxo_compra(navegador, request):
         pagamento.preencher_cidade(
             DADOS_ENDERECO["cidade"]
         )
+
+        pagamento.selecionar_estado("RJ")
 
         capturar_evidencia(
             navegador,
