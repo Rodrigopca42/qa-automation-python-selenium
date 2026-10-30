@@ -65,7 +65,10 @@ def test_acessar_catalogo_e_visualizar_produto(navegador, request):
             '=== INÍCIO DO TESTE DE CATÁLOGO E PDP ==='
         )
 
-        driver.maximize_window()
+        if os.getenv("CI") == "true":
+            driver.set_window_size(1920, 1080)
+        else:
+            driver.maximize_window()
 
         capturar_evidencia(
             driver,

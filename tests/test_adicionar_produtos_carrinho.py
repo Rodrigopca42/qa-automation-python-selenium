@@ -71,7 +71,10 @@ def test_adicionar_produtos_ao_carrinho(navegador, request):
             "========== INÍCIO DO TESTE: ADICIONAR PRODUTOS AO CARRINHO =========="
         )
 
-        driver.maximize_window()
+        if os.getenv("CI") == "true":
+            driver.set_window_size(1920, 1080)
+        else:
+            driver.maximize_window()
 
         # ====================================================
         # HOME
