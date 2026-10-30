@@ -4,6 +4,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
 
 from config.configuracoes import TIMEOUT
 
@@ -323,6 +324,22 @@ class CheckOutPaymentPage:
 
     def preencher_cpf(self, cpf):
         self.preencher_campo(self.INPUT_CPF, cpf)
+
+        elemento = self.aguardar_elemento_clicavel(self.INPUT_CPF)
+
+        valor_preenchido = elemento.get_attribute("value")
+
+        assert valor_preenchido, (
+            "O campo CPF permaneceu vazio após o preenchimento."
+        )
+
+        elemento.send_keys(Keys.TAB)
+
+        WebDriverWait(self.driver, 5).until(
+            lambda driver: driver.find_element(
+                *self.INPUT_CPF
+            ).get_attribute("aria-invalid") != "true"
+        )
 
 
     # ====================================================
